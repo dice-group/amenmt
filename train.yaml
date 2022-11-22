@@ -1,0 +1,75 @@
+save_data: Dataset
+
+# Prevent overwriting existing files in the folder
+overwrite: True
+
+# Corpus opts:
+data:
+    corpus_1:
+        path_src: ../Dataset/src_train_shuf.txt
+        path_tgt: ../Dataset/tgt_train_shuf.txt
+    valid:
+        path_src: ../Dataset/tgt_train_shuf.txt
+        path_tgt: ../Dataset/tgt_train_shuf.txt
+# Vocabulary files that were just created
+src_vocab: ../Vocabular/example.vocab.src
+tgt_vocab: ../Vocabular/example.vocab.tgt
+
+# Train on a single GPU
+world_size: 1
+gpu_ranks: [0]
+
+# to set src and tgt embeddings separately:
+src_embeddings: ../Training/amharic-word2vec-300D
+# tgt_embeddings: ...
+
+# supported types: GloVe, word2vec
+embeddings_type: "word2vec"
+
+# word_vec_size need to match with the pretrained embeddings dimensions
+word_vec_size: 300
+embedding_size: 512
+# train_from: Models_step_200000.pt
+# Where to save the checkpoints
+save_model: Models
+save_checkpoint_steps: 50000
+train_steps: 250000
+valid_steps: 10000
+report_every: 200
+num_workers: 0
+
+
+# Model
+encoder_type: transformer
+decoder_type: transformer
+position_encoding: true
+dec_layers: 6
+
+heads: 8
+rnn_size: 512
+word_vec_size: 512
+num_layers: 6
+transformer_ff: 8192
+dropout_steps: [0]
+dropout: [0.1]
+attention_dropout: [0.1]
+batch_size: 8192
+batch_type: tokens
+src_word_vec_size: 500
+feat_vec_size: 12
+rnn_size: 512
+tgt_word_vec_size: 512
+
+model_dtype: "fp32"
+optim: "adam"
+learning_rate: 2
+warmup_steps: 8000
+decay_method: "noam"
+adam_beta2: 0.998
+max_grad_norm: 0
+label_smoothing: 0.2
+beam_width: 5
+param_init: 0
+param_init_glorot: true
+normalization: "tokens"
+replace_unknown_target: true
